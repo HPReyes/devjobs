@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Vacante extends Model
 {
     use HasFactory;
+
+    protected $casts = ['ultimo_dia' => 'date:d-m-Y']; //para convertir el string del último día en fecha
+    protected $fillable = [
+        'titulo',
+        'salario_id',
+        'categoria_id',
+        'empresa',
+        'ultimo_dia',
+        'descripcion',
+        'imagen',
+        'user_id',
+    ];
 }
