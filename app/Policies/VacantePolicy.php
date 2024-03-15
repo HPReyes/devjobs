@@ -9,10 +9,18 @@ use Illuminate\Auth\Access\Response;
 class VacantePolicy
 {
 
-
+    public function viewAny(User $user)
+    {
+        // return $user->rol === 2;
+    }
     public function update(User $user, Vacante $vacante): bool
     {
         return $user->id === $vacante->user_id;
+    }
+
+    public function create(User $user)
+    {
+        // return $user->rol === 2;
     }
 
     
