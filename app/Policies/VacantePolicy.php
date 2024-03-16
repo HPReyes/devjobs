@@ -11,7 +11,7 @@ class VacantePolicy
 
     public function viewAny(User $user)
     {
-        // return $user->rol === 2;
+        return $user->rol === 2;
     }
     public function update(User $user, Vacante $vacante): bool
     {
@@ -20,7 +20,7 @@ class VacantePolicy
 
     public function create(User $user)
     {
-        // return $user->rol === 2;
+        return $user->rol === 2;
     }
 
     

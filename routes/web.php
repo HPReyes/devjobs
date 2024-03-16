@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,9 @@ Route::get('/vacantes/create',[VacanteController::class, 'create'])->middleware(
 Route::get('/vacantes/{vacante}/edit',[VacanteController::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
 Route::get('/vacantes/{vacante}',[VacanteController::class, 'show'])->name('vacantes.show');
 
+
+
+Route::get('/notificaciones',NotificacionController::class)->name('notificaciones.index');
 
 
 
