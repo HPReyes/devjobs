@@ -11,6 +11,10 @@
                 </div>
 
                 @auth
+                @can('create',App\Models\Vacante::class)
+
+
+
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Mis Vacantes') }}
@@ -18,9 +22,10 @@
                         <x-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
                             {{ __('Crear Vacante') }}
                         </x-nav-link>
-  
+
 
                     </div>
+                    @endcan
                 @endauth
 
 
@@ -31,6 +36,14 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 @auth
+                
+                 @can('create',App\Models\Vacante::class)
+                    
+                        <a class="mr-2 w-7 h-7 bg-indigo-600 hover:bg-indigo-800 rounded-full flex flex-col justify-center items-center text-sm font-extrabold text-white" href="{{ route('notificaciones.index') }}">
+                            {{ auth()->user()->unreadNotifications()->count() }}
+                        </a>
+                    @endcan
+
 
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -54,31 +67,31 @@
                                 {{ __('Perfil') }}
                             </x-dropdown-link>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Cerrar sesión') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>                        
+                                    {{ __('Cerrar sesión') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
                 @endauth
                 @guest
-                    
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('login')">
-                        {{ __('Iniciar sesión') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('register')" >
-                        {{ __('Crear cuenta') }}
-                    </x-nav-link>
-        
-        
-                </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('login')">
+                            {{ __('Iniciar sesión') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')">
+                            {{ __('Crear cuenta') }}
+                        </x-nav-link>
+
+
+                    </div>
                 @endguest
 
             </div>
@@ -107,9 +120,25 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Mis Vacantes') }}
                 </x-responsive-nav-link>
+                @can('create',App\Models\Vacante::class)
+
                 <x-responsive-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
                     {{ __('Crear Vacante') }}
                 </x-responsive-nav-link>
+
+                @if (auth()->user()->rol === 2)
+                <div class="flex gap-2 items-center p-3">
+
+                
+                <a class=" w-7 h-7 bg-indigo-600 hover:bg-indigo-800 rounded-full flex flex-col justify-center items-center text-sm font-extrabold text-white" href="{{ route('notificaciones.index') }}">
+                    {{ auth()->user()->unreadNotifications()->count() }}
+                </a>
+                <p class="text-base font-medium text-gray-600">
+                    @choice('Notificación|Notificaciones', auth()->user()->unreadNotifications()->count())
+                </p>
+            </div>
+            @endif
+            @endcan
             </div>
 
             <!-- Responsive Settings Options -->
@@ -138,15 +167,15 @@
             </div>
         @endauth
         @guest
-                    
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('login')" >
-                {{ __('Iniciar sesión') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('register')" >
-                {{ __('Crear cuenta') }}
-            </x-responsive-nav-link>
-        </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Iniciar sesión') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Crear cuenta') }}
+                </x-responsive-nav-link>
+            </div>
         @endguest
 
     </div>
